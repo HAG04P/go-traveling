@@ -2,18 +2,30 @@ import { useEffect, useState } from "react"
 import { Title } from "../components/Title"
 import { Link } from "react-router-dom";
 
+type Hotel = {
+  id: string;
+  name:string ;
+  starring: string;
+  image: string;
+  description : string;  //any[] is a type of array that can hold anything.
+  price:string
+}
+type Hotels = {
+  hotels:[Hotel];
+}
+
 export const Hotels = () => { 
-  const [hotels,sethotels]= useState([]);
+  const [hotels,setHotels]= useState<Hotel>();
   useEffect(()=>{
     fetch('https://api-tests.workingpos.com/api/go-traveling/hotels')
     .then((response) => response.json())
-    .then((hotels) => sethotels(hotels.data));
+    .then((hotels) => setHotels(hotels.data));
   },[]);
   return (
     <div >
        <Title texto="Busca un hotel cerca de ti" />
         <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2">
-          {hotels.map((hotel) => (
+          {hotels.map((hotel: Hotel) => (
             <Link to={`/${hotel.id}`} className="overflow-hidden bg-white rounded-lg shadow-md hover:cursor-pointer">
             <div key={hotel.name} className="overflow-hidden bg-white rounded-lg shadow-md hover:cursor-pointer">
              
